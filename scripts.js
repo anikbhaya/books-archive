@@ -1,28 +1,8 @@
-// 1. Show Result after clicking search button
-// 2. Responsive is optional
-// 3. Need to show following book details
-//     - Book Name (title)
-//     - Author Name (Need validation if not available) (author_name)
-//     - Publishers Name (publisher)
-//     - First Publishes Data (Show only if available) (publish_date)
-// 4. Books result need to be more that 1 in a row
-// 5. Showing the quanity of the results that found
-// 6. validation needed if not results found
-
-// Bonus Part
-// -----------
-// 7. Need to use only arrow funtion rather than regular function
-// 8. Need to use forEach() on array loop.
-// 9. Must need to use Tripple Equal if comparison needed,
-//     otherwise not.
-// 10. Book image needed to be shown along with book details.
-
 const resultSection = document.getElementById('results');
 const spinner = document.getElementById('spinner');
 
 
 const fetchResult = () => {
-    
     const inputValue = document.getElementById('searchInput').value;
     resultSection.textContent= "";
     // Blank Input Validation
@@ -30,15 +10,13 @@ const fetchResult = () => {
         resultSection.innerHTML= `
             <p class="text-danger text-center">Please Type Something To Search</p>
         `;
-    }
-    else{
+    }else{
         // Fetch Data From Api
         fetch(`https://openlibrary.org/search.json?q=${inputValue}`)
         .then(response => response.json())
         .then(data => getResult(data))
         spinner.classList.remove("d-none");
     }
-    
 }
 
 const getResult = (data) =>{
@@ -47,8 +25,7 @@ const getResult = (data) =>{
         resultSection.innerHTML= `
             <p class="text-danger text-center">No Result Found!</p>
         `
-    }
-    else{
+    }else{
         spinner.classList.remove("d-none");
         const resultFound = data.docs;
         resultSection.innerHTML= `
@@ -56,7 +33,6 @@ const getResult = (data) =>{
         `;
         resultFound.forEach(book => showResult(book))
     }
-    
 }
 
 const showResult = bookObj => {
@@ -64,35 +40,33 @@ const showResult = bookObj => {
     let authorName = bookObj.author_name;
     let publishYear = bookObj.publish_date;
     let publisher = bookObj.publisher;
-    let thumbnail = `https://covers.openlibrary.org/b/id/${bookObj.cover_i}-M.jpg`;
 
+    let thumbnail = `https://covers.openlibrary.org/b/id/${bookObj.cover_i}-M.jpg`;
+    if(bookObj.cover_i === undefined){
+        thumbnail = `https://www.messagetech.com/wp-content/themes/ml_mti/images/no-image.jpg`
+    }
+
+    // Data Validation
     if(bookTitle === undefined){
         bookTitle = "No Title Available"
     }
-
     if(authorName === undefined){
         authorName = "No Author Name Available"
     }else if(authorName.length > 2){
         authorName = authorName.slice(0, 2);
     }
-
     if(publishYear === undefined){
         publishYear = "No Publish Date Available"
     }else if(publishYear.length > 1){
         publishYear = publishYear.slice(0, 1);
     }
-
     if(publisher === undefined){
         publisher = "No Publisher Data Available"
     }else if(publisher.length > 2){
         publisher = publisher.slice(0, 1);
     }
 
-
-    if(bookObj.cover_i === undefined){
-        thumbnail = `https://www.messagetech.com/wp-content/themes/ml_mti/images/no-image.jpg`
-    }
-
+    // Append Results
     const div = document.createElement("div");
     div.classList.add("col", "col-3", "p-4");
     div.innerHTML = `
