@@ -1,0 +1,14 @@
+:root {
+    --animate-duration: 1000ms;
+  }
+  
+  
+  #booksAnimate {
+    width: auto;
+    height: 600px;
+  }
+
+  #booksOpen {
+    width: auto;
+    height: 600px;
+  }

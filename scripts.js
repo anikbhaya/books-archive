@@ -16,6 +16,9 @@ const fetchResult = () => {
         .then(response => response.json())
         .then(data => getResult(data))
         spinner.classList.remove("d-none");
+
+        const booksAnimate = document.getElementById('booksAnimate');
+        booksAnimate.remove();
     }
 }
 
@@ -29,7 +32,7 @@ const getResult = (data) =>{
         spinner.classList.remove("d-none");
         const resultFound = data.docs;
         resultSection.innerHTML= `
-            <p class="text-danger text-center">${resultFound.length} Results Found!</p>
+            <p class="text-danger text-center">Showing ${resultFound.length} Results out of ${data.numFound}!</p>
         `;
         resultFound.forEach(book => showResult(book))
     }
@@ -68,7 +71,7 @@ const showResult = bookObj => {
 
     // Append Results
     const div = document.createElement("div");
-    div.classList.add("col", "col-3", "p-4");
+    div.classList.add("col", "col-12", "col-md-6", "col-lg-4", "col-xl-3", "p-4", "wow", "animate__animated", "animate__fadeInUp");
     div.innerHTML = `
         <div class="border-5 border-bottom border-primary">
         <img style="height: 350px; width: 100%" class="img-thumbnail" src="${thumbnail}" alt="">
@@ -79,6 +82,30 @@ const showResult = bookObj => {
         <p class="mb-1 ">Publishers Name: <span class="text-primary">${publisher}</span></p>
     `;
     spinner.classList.add("d-none");
+
+    
+
     resultSection.appendChild(div) ;
 
 }
+
+// Initialize Wow js
+new WOW().init();
+
+bodymovin.loadAnimation({
+    container: document.getElementById('booksAnimate'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'booksAnimate.json'
+  })
+bodymovin.loadAnimation({
+    container: document.getElementById('booksOpen'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'booksOpen.json'
+  })
+
+
+
