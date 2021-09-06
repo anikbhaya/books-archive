@@ -97,14 +97,14 @@ bodymovin.loadAnimation({
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'booksAnimate.json'
+    path: 'json/booksAnimate.json'
   })
 bodymovin.loadAnimation({
     container: document.getElementById('booksOpen'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'booksOpen.json'
+    path: 'json/booksOpen.json'
   })
 
 
